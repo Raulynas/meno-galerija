@@ -15,7 +15,7 @@
                     <label for="textarea">Description</label> </div>
 
                 <div class="input-field">
-                    <select multiple id="category_id" name="category_id[]" value="0" >
+                    <select multiple id="category_id" name="category_id[]" value="0" required>
 
                         <option value="0" disabled selected>Select categories</option>
                         @foreach ($categories as $item)

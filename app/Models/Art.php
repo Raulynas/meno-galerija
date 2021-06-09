@@ -20,6 +20,17 @@ class Art extends Model
     {
         return $this->belongsToMany(Category::class, "artcategories");
     }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class, "art_id");
+    }
+
+
+
+
+
+
     public function artCategoriesInArray()
     {
 

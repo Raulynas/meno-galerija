@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Art;
+use App\Models\Image;
 use App\Models\Category;
 use App\Models\Artcategory;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +54,33 @@ class ArtController extends Controller
      */
     public function store(Request $request)
     {
+        // Methods can be used on $request
+
+        //guessExtension()
+        //getMimeType()
+        //store()
+        //asStore()
+        //storePublicly()
+        //move()
+        //getClientOriginalName
+        //getClientMimeType()
+        //guessClientExtension()
+        //getSize()
+        //getError()
+        //isValid()
+
+        $test = $request->file("image")->getSize();
+
+        $request->validate([
+            "title" => "required|string|min:1|max:25",
+            "description" => "required|string|min:1|max:2000",
+            "category_id" => "required",
+            "image" => "mimes:jpg,png,jpeg|max:5048",
+        ]);
+
+        $newImageName = time() . "-" . $request->title . "." . $request->image->extension();
+        $request->image->move(public_path("img"), $newImageName);
+
 
         $art = Art::create([
             'title' => $request->title,
@@ -67,6 +95,12 @@ class ArtController extends Controller
                 'category_id' => $request->category_id[$i],
             ]);
         }
+
+        $image = Image::create([
+            "name" => $newImageName,
+            "art_id" => $art->id,
+        ]);
+
 
         return redirect()->route('art.user');
     }
