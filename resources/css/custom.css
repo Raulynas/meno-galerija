@@ -1,0 +1,77 @@
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+nav {
+    background-color: rgb(86, 135, 158);
+    background-image: url(https://mk0emillionsartosrn1.kinstacdn.com/wp-content/uploads/2020/03/Translucence-Dario-Campanile-870x550.jpg);
+}
+
+.section {
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+}
+.page-footer {
+    margin-top: 100px;
+}
+
+.nav-wraper a,
+.nav-wraper li:focus-visible {
+    outline: none;
+}
+
+/* ART CARDS */
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    width: 240px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.card-content {
+    display: flex;
+    flex-direction: column;
+}
+.categories,
+.description {
+    height: 100px;
+    max-height: 100px;
+    overflow: hidden;
+}
+.card-action {
+    display: flex;
+    flex-direction: row;
+}
+
+/* home page */
+.home-container .card {
+    width: 100%;
+}
+
+/* index blade */
+
+.user-view > img {
+    height: 150px;
+}
+
+/* layout */
+
+#slide-out > ol > div > div > input{
+    border-bottom: none ;
+    font-size: 12px;
+    margin: 0;
+}
