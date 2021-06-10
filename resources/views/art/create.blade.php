@@ -24,8 +24,8 @@
                     </select>
                 </div>
                 <div class="input-field">
-                                    <input type="file" name="image" id="image">
-                                </div>
+                    <input type="file" name="image" id="image">
+                </div>
 
                 <div class="input-field center">
                     <input class="btn" type="submit" value="Save">

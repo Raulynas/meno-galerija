@@ -15,8 +15,11 @@
 
         <div class="card">
             <div class="card-image">
-                <img class="materialboxed"
-                    src="https://i.pinimg.com/originals/db/00/ab/db00abcf6c5909bf4763f8c30fbe1701.jpg" alt=""> </div>
+                @if(count($artItem->images) > 0)
+                <img class="materialboxed" src="{{asset('img/'. $artItem->images[0]->name)}}" alt="">
+                @else
+                <img class="materialboxed" src="{{asset('img/default.jpg')}}" alt="">
+                @endif </div>
             <div class="card-content left">
                 <div class="card-title">
                     <span>{{$artItem->title}}</span>

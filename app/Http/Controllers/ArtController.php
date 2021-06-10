@@ -18,7 +18,7 @@ class ArtController extends Controller
      */
     public function index()
     {
-        $art = Art::all();
+        $art = Art::latest()->get();
 
         $categories = Category::All();
 
@@ -27,7 +27,7 @@ class ArtController extends Controller
     public function userIndex()
 
     {
-        $UserArt = Art::where("user_id", Auth::user()->id)->get();
+        $UserArt = Art::where("user_id", Auth::user()->id)->latest()->get();
 
         // $art = Art::whereHas("categories", function ($filter) {
         //     $filter->where("categories.id", 5);
@@ -69,7 +69,6 @@ class ArtController extends Controller
         //getError()
         //isValid()
 
-        $test = $request->file("image")->getSize();
 
         $request->validate([
             "title" => "required|string|min:1|max:25",
@@ -78,12 +77,11 @@ class ArtController extends Controller
             "image" => "mimes:jpg,png,jpeg|max:5048",
         ]);
 
-        $newImageName = time() . "-" . $request->title . "." . $request->image->extension();
-        $request->image->move(public_path("img"), $newImageName);
 
+        $formateTitle = ucfirst(strtolower($request->title));
 
         $art = Art::create([
-            'title' => $request->title,
+            'title' => $formateTitle,
             'description' => $request->description,
             'status' => 0,
             'user_id' => Auth::user()->id,
@@ -96,10 +94,16 @@ class ArtController extends Controller
             ]);
         }
 
-        $image = Image::create([
-            "name" => $newImageName,
-            "art_id" => $art->id,
-        ]);
+        if ($request->has("image")) {
+
+            $newImageName = time() . "-" . $request->title . "." . $request->image->extension();
+            $request->image->move(public_path("img"), $newImageName);
+
+            $image = Image::create([
+                "name" => $newImageName,
+                "art_id" => $art->id,
+            ]);
+        }
 
 
         return redirect()->route('art.user');
@@ -156,7 +160,7 @@ class ArtController extends Controller
             ]);
         }
 
-        return redirect()->route('art.index')->with("msg", "Category \"$formateTitle\" was updated successfully");
+        return redirect()->route('art.user')->with("msg", "Category \"$formateTitle\" was updated successfully");
     }
 
     /**
@@ -170,9 +174,10 @@ class ArtController extends Controller
     {
         // delete all art categories belonging to artItem
         ArtCategory::where("art_id", $artItem->id)->delete();
+        Image::where("art_id", $artItem->id)->delete();
 
         $artItem->delete();
 
-        return redirect()->route('art.index')->with("msg", "\"$artItem->title\" was deleted successfully");
+        return redirect()->route('art.user')->with("msg", "\"$artItem->title\" was deleted successfully");
     }
 }

@@ -10,16 +10,17 @@
             <span class="indigo-text" style="font-style: italic">{{session("msg")}}</span>
         </div>
     </div>
+    <form class="search">
+        <input type="text" class="form-control m-auto" name="search" placeholder="search arts">
+    </form>
     <container class="cards">
         @foreach ($art as $artItem)
         <div class="card">
             <div class="card-image">
                 @if(count($artItem->images) > 0)
-                <img class="materialboxed"
-                src="{{asset('img/'. $artItem->images[0]->name)}}" alt="">
+                <img class="materialboxed" src="{{asset('img/'. $artItem->images[0]->name)}}" alt="">
                 @else
-                <img class="materialboxed"
-                src="{{asset('img/default.jpg')}}" alt="">
+                <img class="materialboxed" src="{{asset('img/default.jpg')}}" alt="">
                 @endif
             </div>
             <div class="card-content left">
